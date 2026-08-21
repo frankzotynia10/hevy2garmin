@@ -261,6 +261,9 @@ class TestBuildPayload:
                 continue
             for ex in s["exercises"]:
                 assert set(ex) == {"category", "name", "probability"}
+                # 0/null confidence makes Connect render the exercise as "Unknown"
+                # on watch-recorded activities (#325); the web UI's edits send 100
+                assert ex["probability"] == 100
                 assert isinstance(ex["category"], str) and ex["category"] != "UNKNOWN"
                 assert ex["name"] is None or isinstance(ex["name"], str)
                 # name must never echo the parent or the TOTAL_BODY placeholder

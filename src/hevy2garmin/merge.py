@@ -338,8 +338,10 @@ def build_exercise_sets_payload(
         reps = s.get("reps")
         weight_kg = s.get("weight_kg")
 
+        # probability must be non-zero: Connect renders any exercise whose stored
+        # confidence is 0 as "Unknown" (#325). The web UI's own edits send 100.
         active_set: dict = {
-            "exercises": [{"category": cat_str, "name": sub_name, "probability": None}],
+            "exercises": [{"category": cat_str, "name": sub_name, "probability": 100}],
             "duration": round(scaled_dur, 3),
             "repetitionCount": int(reps) if reps is not None else 0,
             "weight": float(round(weight_kg * 1000)) if weight_kg else 0.0,
