@@ -348,6 +348,7 @@ def sync_one_workout(
     merge_max_drift_min = cfg.get("merge_max_drift_min", 20)
     merge_activity_types = set(cfg.get("merge_activity_types", ["strength_training"]))
     merge_watch_strategy = cfg.get("merge_watch_strategy", "replace")
+    merge_preserve_watch_timing = cfg.get("merge_preserve_watch_timing", True)
     description_enabled = cfg.get("description_enabled", True)
     hr_fusion_on = cfg.get("hr_fusion", {}).get("enabled", True)
 
@@ -364,6 +365,7 @@ def sync_one_workout(
             max_drift_minutes=merge_max_drift_min,
             activity_types=merge_activity_types,
             watch_strategy=merge_watch_strategy,
+            preserve_watch_timing=merge_preserve_watch_timing,
         )
         if merge_result.merged:
             fit_stats = _estimate_fit_stats(workout)
@@ -444,6 +446,7 @@ def sync_one_workout(
                 max_drift_minutes=merge_max_drift_min,
                 activity_types=merge_activity_types,
                 watch_strategy="merge",
+                preserve_watch_timing=merge_preserve_watch_timing,
             )
             if fallback.merged:
                 fit_stats = _estimate_fit_stats(workout)
